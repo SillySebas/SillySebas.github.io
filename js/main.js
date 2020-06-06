@@ -6,6 +6,17 @@ const langButtonRight = document.querySelector("#rightLangButton");
 
 const lang = document.querySelector("#languages");
 
+
+let children = Array.from(lang.children)
+
+children.forEach(function(e)
+{
+    e.onclick = (ee) => {
+        window.location.href = `${e.getAttribute("alt").toLowerCase()}/${e.getAttribute("alt").toLowerCase()}.html`;
+    };
+});
+
+
 langButtonLeft.addEventListener('click', function(e)
 {
     let firstLang = languagesHtml[0];
@@ -38,11 +49,10 @@ langButtonLeft.addEventListener('click', function(e)
 
 langButtonRight.addEventListener('click', function(e)
 {
-    let firstLang = languagesHtml[0];
+    let lastLang = languagesHtml.pop();
     let newHtml = '';
 
-    languagesHtml.push(firstLang);
-    languagesHtml.shift();
+    languagesHtml.unshift(lastLang)
     
     for(i in languagesHtml)
     {
