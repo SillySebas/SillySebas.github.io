@@ -102,12 +102,33 @@ a:hover
     border: #333 solid 1px;
 }
 
+#right-fade
+{
+    position: relative;
+    top: -245px;
+   
+    float: left;
+    border: 0;    
+    width: 400px;
+    height: 230px;
+}
+
+#left-fade
+{
+    position: relative;
+    top: -245px;
+   
+    float: right;
+    border: 0;    
+    width: 400px;
+    height: 230px;
+}
+
 #leftLangButton
 {
     position: relative;
-    z-index: 0s;
     top: -235px;
-
+    left: -400px;
     float: left;
     border: 0;    
     width: 100px;
@@ -117,7 +138,6 @@ a:hover
 #leftLangButton:hover
 {
     position: relative;
-    z-index: 0;
     top: -235px;
 
     display: block;
@@ -137,8 +157,8 @@ a:hover
 #rightLangButton
 {
     position: relative;
-    z-index: 0;
     top: -235px;
+    right: -400px;
 
     float: right;
     border: 0;   
@@ -149,7 +169,6 @@ a:hover
 #rightLangButton:hover
 {
     position: relative;
-    z-index: 0;
     top: -235px;
 
     padding-left: 100px;
@@ -168,6 +187,7 @@ a:hover
 
 #main-header
 {
+    z-index: 1;
     position: fixed;
     width: 100%;
     height: 74px;
@@ -179,26 +199,46 @@ a:hover
 
 #main-header .container
 {
+    z-index: 1;
     background-image: linear-gradient(to right,rgb(180, 252, 255), rgb(255, 255, 255));
 }
 
 
 #main-header h1
 {
+    z-index: 1;
     font-family: oswald;
     font-weight: bolder;
     padding: 0px;
     margin-top: 23px;
 }
 
+#secretLink
+{
+    color: #333;
+    padding: 0px;
+    margin: auto;
+}
+
+#secretLink:hover
+{
+    background-color: transparent;
+    color: #333;
+    padding: 0px;
+    margin: auto;
+    cursor: text;
+}
+
 #main-header-image
 {
+    z-index: 1;
     padding: 5px;
     float: left;
 }
 
 #navbar
 {
+    z-index: 1;
     position: fixed;
     width: 100%;
     top: 74px;

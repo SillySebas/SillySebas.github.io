@@ -1,0 +1,95 @@
+
+body
+{
+    background-color: #333;
+}
+
+.container
+{
+    background-color: white;
+    width: 80%;
+    padding: 10px;
+    margin: auto;
+}
+
+#keyCode
+{   
+    margin: auto;
+    text-align: center; 
+    width: 345px;
+}
+
+#keyCode h1
+{
+    background-color: #333;
+    color: white;
+
+    font-size: 50px;
+    font-weight: 800;
+
+    padding: 15px;
+
+    border: 2px solid black;
+}
+
+#keypad
+{
+    margin: auto;
+    text-align: center;
+}
+#keypad:last-child
+{
+    margin: auto;
+
+    padding-bottom: 80%;
+}
+
+#keypad input
+{
+    font-size: 50px;
+    font-weight: 800;
+
+    background-color: #333;
+    color: white;
+    padding: 30px;
+    padding-left: 36px;
+    padding-right: 36px;
+
+    width: 115px;
+
+    border: black 2px solid;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+#button-0
+{
+    background-color: #333;
+    color: white;
+
+    border: black 2px solid;
+
+    position: relative;
+    
+    text-align: center;
+
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+#keypad input:active
+{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 30px;
+    padding-left: 36px;
+    padding-right: 36px;
+
+    width: 115px;
+
+    border: black 1px solid;
+    border-radius: 0px;
+
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
