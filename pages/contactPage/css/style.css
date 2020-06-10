@@ -1,7 +1,7 @@
 @font-face
 {
     font-family: oswald;
-    src: url(../../css/static/Oswald-Bold.ttf);
+    src: url(static/Oswald-Bold.ttf);
     font-weight: bold;
 }
 
@@ -91,10 +91,9 @@ nav em
     border-right: solid black 2px;
 }
 
-
-
 #main-header
 {
+    z-index: 1;
     position: fixed;
     width: 100%;
     height: 74px;
@@ -106,39 +105,30 @@ nav em
 
 #main-header .container
 {
+    z-index: 1;
     background-image: linear-gradient(to right,rgb(180, 252, 255), rgb(255, 255, 255));
 }
 
 
 #main-header h1
 {
+    z-index: 1;
     font-family: oswald;
     font-weight: bolder;
     padding: 0px;
     margin-top: 23px;
 }
 
-#main-header p
-{
-    font-family: oswald;
-    font-weight: bolder;
-    padding: 0px;
-    margin: 0px;
-    position: fixed;
-    width: 100%;
-    height: 74px;
-    left: 530px;
-    top: 27px;
-}
-
 #main-header-image
 {
+    z-index: 1;
     padding: 5px;
     float: left;
 }
 
 #navbar
 {
+    z-index: 1;
     position: fixed;
     width: 100%;
     top: 74px;
@@ -146,104 +136,20 @@ nav em
     border-bottom: rgb(0, 0, 0) solid 2px;
 }
 
-#about
+#main
 {
-    margin: 0px;
-    padding: 0px;
-    padding-top: 100px;
+    padding-top: 74px;
+    border-bottom: 0px solid black;
 }
 
-#about .container
+#main .container 
 {
-    background-color: white;
+    border-top: 2px black solid;
+    background-color: white ;
+    border-bottom: 0px black solid;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
-
-#about .container h1
-{
-    background-color: #333;
-    color: rgb(255, 255, 255);
-    text-decoration: underline;
-    border: 2px black solid;
-    
-    border-radius: 5px;
-    padding: 5px;
-
-    width: min-content;
-    margin-left: 10%;
-}
-
-#about p
-{
-    font-size: 20px;
-    border: 2px black solid;
-    border-radius: 5px;
-    margin-top: 0px;
-    margin-left: 10%;
-    margin-right: 45px;
-    min-width: 504px;
-    padding: 5px;
-    box-sizing: border-box;
-    float: left;
-    min-height: 704px;
-}
-
-#photo
-{
-    padding: 0px;
-    margin: 0px;
-    border: 2px black solid;
-    border-radius: 5px;
-}
-
-#photo-div
-{
-    padding: 0px;
-    margin-left: auto;
-    margin-right: 10%;
-    float: right;
-}
-
-#accomplishments p
-{
-    font-size: 20px;
-    border: 2px black solid;
-    border-radius: 5px;
-    margin-top: 0px;
-    margin-left: 10%;
-    margin-right: 45px;
-    min-width: 504px;
-    padding: 5px;
-    box-sizing: border-box;
-    float: left;
-    min-height: 704px;
-}
-
-
-#accomplishments .container
-{
-    background-color: white;
-}
-
-#accomplishments .container h1
-{
-    background-color: #333;
-    color: rgb(255, 255, 255);
-    text-decoration: underline;
-    border: 2px black solid;
-    
-    border-radius: 5px;
-    padding: 5px;
-
-    width: max-content;
-    margin-left: 10%;
-}
-
-
-
-
-
-
-
 
 #socialmediabar
 {
@@ -266,5 +172,3 @@ nav em
     margin: auto;
     background-image: linear-gradient(to right, rgb(255, 255, 255),rgb(180, 252, 255));
 }
-
-

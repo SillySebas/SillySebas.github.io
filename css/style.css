@@ -32,6 +32,12 @@ a:hover
     background-color: rgb(70, 70, 70);
 }
 
+nav em
+{
+    font-style: normal;
+    text-decoration: underline;
+}
+
 .text-box
 {
     background-color: #333;
