@@ -82,7 +82,7 @@ let interval = "",interval2;
 
 titleMain.addEventListener('mouseover', function(e)
 {
-    let texts = ['Sebastian Peacock','S ebastian Peacock','S e bastian Peacock','S e b astian Peacock','S e b a stian Peacock','S e b a s tian Peacock','S e b a s t ian Peacock','S e b a s t i an Peacock','S e b a s t i a n Peacock','S e b a s t i a n  P eacock','S e b a s t i a n  P e acock','S e b a s t i a n  P e a cock','S e b a s t i a n  P e a c ock','S e b a s t i a n  P e a c o ck','S e b a s t i a n  P e a c o c <a id="secretLink" href="../pages/secretPage/secret.html">k</a>'], i = 0;
+    let texts = ['Sebastian Peacock','S ebastian Peacock','S e bastian Peacock','S e b astian Peacock','S e b a stian Peacock','S e b a s tian Peacock','S e b a s t ian Peacock','S e b a s t i an Peacock','S e b a s t i a n Peacock','S e b a s t i a n  P eacock','S e b a s t i a n  P e acock','S e b a s t i a n  P e a cock','S e b a s t i a n  P e a c ock','S e b a s t i a n  P e a c o ck','S e b a s t i a n  P e a c o c <a id="secretLink" href="/secret/">k</a>'], i = 0;
 
     function changeText() 
     {

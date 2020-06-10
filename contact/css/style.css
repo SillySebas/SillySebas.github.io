@@ -14,7 +14,7 @@ body
     margin: 0px;
 }
 
-a
+nav a
 {
     text-decoration: none;
     color: white;
@@ -23,7 +23,7 @@ a
     padding-right: 15px;
 }
 
-a:hover
+nav a:hover
 {
     color: rgb(109, 148, 255);
     padding: 5px;
@@ -149,6 +149,46 @@ nav em
     border-bottom: 0px black solid;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+#contact
+{
+    padding-left: 10%;
+}
+
+#contact h1
+{
+    font-family: oswald;
+    font-size: 40px;
+}
+
+#contact h2
+{
+    font-family: oswald;
+    font-size: 20px;
+    padding-left: 30px;
+}
+
+#contact a
+{
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    margin-left: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#contact a:hover
+{
+    color: rgb(109, 148, 255);
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #333;
 }
 
 #socialmediabar
