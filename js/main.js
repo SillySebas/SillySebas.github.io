@@ -1,5 +1,5 @@
 const languagesBackground = [];
-const languagesHtml = ["<img class=\"langImg\" src=\"assets/css.png\" alt=\"CascadingStyleSheets\" title=\"Cascading Style Sheets\">", "<img class=\"langImg\" src=\"assets/html.png\" alt=\"HyperTextMarkupLanguage\" title=\"HyperText Markup Language\">", "<img class=\"langImg\" src=\"assets/js.png\" alt=\"JavaScript\" title=\"Java Script\">", "<img class=\"langImg\" src=\"assets/python.png\" alt=\"Python\" title=\"Python\">","<img class=\"langImg\" src=\"assets/java.png\" alt=\"Java\" title=\"Java\">","<img class=\"langImg\" src=\"assets/cpp.png\" alt=\"CPlusPlus\" title=\"C++\">", "<img class=\"langImg\" src=\"assets/c.png\" alt=\"C\" title=\"C\">"];
+const languagesHtml = ["<img class=\"langImg\" src=\"assets/css.png\" alt=\"css\" title=\"Cascading Style Sheets\">", "<img class=\"langImg\" src=\"assets/html.png\" alt=\"html\" title=\"html\">", "<img class=\"langImg\" src=\"assets/js.png\" alt=\"JavaScript\" title=\"Java Script\">", "<img class=\"langImg\" src=\"assets/python.png\" alt=\"Python\" title=\"Python\">","<img class=\"langImg\" src=\"assets/java.png\" alt=\"Java\" title=\"Java\">","<img class=\"langImg\" src=\"assets/cpp.png\" alt=\"CPlusPlus\" title=\"C++\">", "<img class=\"langImg\" src=\"assets/c.png\" alt=\"C\" title=\"C\">"];
 
 const langButtonLeft = document.querySelector("#leftLangButton");
 const langButtonRight = document.querySelector("#rightLangButton");
@@ -13,12 +13,13 @@ let children = Array.from(lang.children)
 children.forEach(function(e)
 {
     e.onclick = (ee) => {
-        window.location.href = `${e.getAttribute("alt").toLowerCase()}/${e.getAttribute("alt").toLowerCase()}.html`;
+        window.open(`code/${e.getAttribute("alt").toLowerCase()}/`, '_blank');
     };
 });
 
-
-
+document.querySelector('#showcase').onclick = (ee) => {
+    window.open(`code/`, '_blank');
+};
 
 langButtonLeft.addEventListener('click', function(e)
 {
@@ -41,7 +42,7 @@ langButtonLeft.addEventListener('click', function(e)
     children.forEach(function(e)
     {
         e.onclick = (ee) => {
-            window.location.href = `${e.getAttribute("alt").toLowerCase()}/${e.getAttribute("alt").toLowerCase()}.html`;
+            window.location.href = `code/${e.getAttribute("alt").toLowerCase()}/`;
         };
     });
 
@@ -69,7 +70,7 @@ langButtonRight.addEventListener('click', function(e)
     children.forEach(function(e)
     {
         e.onclick = (ee) => {
-            window.location.href = `${e.getAttribute("alt").toLowerCase()}/${e.getAttribute("alt").toLowerCase()}.html`;
+            window.location.href = `code/${e.getAttribute("alt").toLowerCase()}/`;
         };
     });
 
