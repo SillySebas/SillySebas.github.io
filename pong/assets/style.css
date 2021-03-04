@@ -1,0 +1,18 @@
+body
+{
+    margin: 0px;
+}
+.pong_container 
+{
+    width: 1400px;
+    height: 800px;
+
+    padding: 0px;
+    background-color: rgb(211, 211, 211);
+    border: solid black 2px;
+}
+
+#the_ball
+{
+    position: absolute;
+}
