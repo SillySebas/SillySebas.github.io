@@ -6,13 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="assets/style.css">
-    <title>PONG</title>
+    <title>Sebas - Pong Game</title>
 </head>
 <body>
-    <div class="pong_container" style="margin: 100px;">
-        <img id="the_ball"src="assets/ball.png" alt="BALL" style="width: 64px;">
+    <div class="pong_container" style="margin: 100px; margin-bottom: 20px; width: 1400px; height: 800px;">
+        <img id="the_ball" src="assets/ball.png" alt="BALL" style="width: 64px;">
+
+        <img id="left_bouncer" src="assets/bouncer.png" style="top: 372px; left: 164px;" alt="BOUNCER">
     </div>
+
+    <button onclick="restartGame()">Restart</button>
     
+    <audio src="assets/bonk.mp3" id="bounce_sound"></audio>
 
     <script src="assets/main.js"></script>
 </body>

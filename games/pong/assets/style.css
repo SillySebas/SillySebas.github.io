@@ -12,6 +12,11 @@ body
     border: solid black 2px;
 }
 
+#left_bouncer
+{
+    position: absolute;
+}
+
 #the_ball
 {
     position: absolute;
