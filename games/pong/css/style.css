@@ -1,0 +1,71 @@
+@font-face
+{
+    font-family: oswald;
+    src: url(../../../assets/fonts/Oswald-ExtraLight.ttf);
+    font-weight: bold;
+}
+body
+{
+    margin: 0px;
+}
+.pong_container 
+{
+    width: 1400px;
+    height: 800px;
+
+    padding: 0px;
+    background-color: rgb(211, 211, 211);
+    border: solid black 2px;
+
+    display: flex;
+}
+
+#left_bouncer
+{
+    position: absolute;
+}
+#right_bouncer
+{
+    position: absolute;
+}
+
+#the_ball
+{
+    position: absolute;
+}
+
+.fixed-list
+{
+    position: fixed;
+    top: 0px;
+}
+.fixed-list li
+{
+    margin: 5px;
+}
+
+#score_player
+{
+    font-family: Oswald;
+    font-size: 70px;
+    margin: 0px auto 0px 10px;
+
+}
+
+#score_ai
+{
+    font-family: Oswald;
+    font-size: 70px;
+
+    justify-content: space-evenly;
+    
+    margin: 0px 10px 0px auto;
+}
+
+#winner
+{
+    font-family: Oswald;
+    font-size: 70px;
+
+    margin: 0px;
+}

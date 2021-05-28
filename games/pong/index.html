@@ -5,20 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>Sebas - Pong Game</title>
 </head>
 <body>
-    <div class="pong_container" style="margin: 100px; margin-bottom: 20px; width: 1400px; height: 800px;">
-        <img id="the_ball" src="assets/ball.png" alt="BALL" style="width: 64px;">
-
-        <img id="left_bouncer" src="assets/bouncer.png" style="top: 372px; left: 164px;" alt="BOUNCER">
-    </div>
-
-    <button onclick="restartGame()">Restart</button>
+    <ul class="fixed-list">
+        <li><button onclick="startGame()">Start!</button></li>
+        <li><button onclick="restartGame()">Restart</button></li>
+        <li><button onclick="debugToggle()">Toggle Debug</button></li>
+    </ul>
     
-    <audio src="assets/bonk.mp3" id="bounce_sound"></audio>
 
-    <script src="assets/main.js"></script>
+    <div class="pong_container" style="margin: 100px; margin-bottom: 20px; width: 1400px; height: 800px;">
+        <p class="score" id="score_player">00</p>
+        <p id="winner"></p>
+        <p class="score" id="score_ai">00</p>
+        <img id="the_ball" src="assets/images/ball.png" alt="BALL" style="width: 64px; top: 450px; left: 768px;">
+
+        <img id="left_bouncer" src="assets/images/bouncer.png" style="top: 372px; left: 164px; width: 32px; height: 256px;" alt="BOUNCER">
+        <img id="right_bouncer" src="assets/images/bouncer.png" style="top: 372px; left: 1400px; width: 32px; height: 256px;" alt="BOUNCER">
+
+        
+    </div>
+    
+    <audio src="assets/sounds/bonk.mp3" id="bounce_sound"></audio>
+    <audio src="assets/death.mp3" id="death_sound"></audio>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
