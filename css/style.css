@@ -4,6 +4,18 @@
     src: url(../assets/fonts/Oswald-ExtraLight.ttf);
     font-weight: bold;
 }
+@font-face {
+    font-family: rubik;
+    src: url(/assets/fonts/RubikMonoOne-Regular.ttf);
+}
+@font-face {
+    font-family: fjalla;
+    src: url(/assets/fonts/FjallaOne-Regular.ttf);
+}
+@font-face {
+    font-family: montserrat;
+    src: url(/assets/fonts/Montserrat-Light.ttf);
+}
 
 html { height: 100%; }
 
@@ -54,6 +66,7 @@ body
     width: 50%;
     margin: auto;
     padding: 0;
+
 }
 
 .heading_nav_list li
@@ -69,6 +82,8 @@ body
 
     padding: 0.5% 2%;
     margin: 1%;
+
+    visibility: inherit;
 }
 
 .heading_nav_list li:hover
@@ -76,6 +91,16 @@ body
     background-color:  #d4eff0;
     color:#364949;
 }
+
+.heading_nav_static_container
+{
+    position: fixed;
+
+    width: 100%;
+    background-color: #669c90;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
 
 .heading_banner
 {
@@ -118,10 +143,63 @@ body
     border-top: none;
     border-bottom: none;
 
-    margin: 0 5%;
-    height: 800px;
+    margin: 0 2%;
+    padding: 2% 2%;
+    min-height: min-content;
+
+    align-items: center;
 }
 
+.topic_heading{
+    font-family: fjalla;
+
+    border-bottom: 2px black solid;
+
+    width: 100%;
+}
+
+.middle_body p{
+    text-align: start;
+    font-family: montserrat;
+    font-weight: 900;
+
+    font-size: large;
+
+    text-indent: 5%;
+}
+
+.topic
+{
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    width: 50%;
+
+    margin-bottom: 1%;
+}
+
+.picture_container
+{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.picture_container img
+{
+    max-width: 25%;
+    margin: 1% 1%;
+
+}
 
 .footing
 {

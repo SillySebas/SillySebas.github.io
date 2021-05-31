@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Conway's Game Of Life - 2 Players</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="assets/images/Growth.PNG" type="image/x-icon">
+  </head>
+  <body style="background-image: linear-gradient(rgb(255, 100, 100), rgb(100, 100, 255))">
+    <div class="gameover-container">
+      <div class="gameover-display">
+        <h1>Play Again?</h1>
+        <a href="" class="gameover-button">Go Back</a>
+      </div> 
+    </div>
+    <div class="sidebar-container">
+
+      <div class="sidebar">
+        <h1>Game Board Rules</h1>
+        <div class="rule-display">
+          <img class="rule-image" src="assets/images/Over Population.PNG" alt="">
+          <p>When an alive square has 4 or more neighbors, it will become dead in the next round. Here, the either colored square will die after the round ends.</p>
+        </div>
+        <div class="rule-display">
+          <img class="rule-image" src="assets/images/Under Population.PNG" alt="">
+          <p>When an alive square has 1 or 0 neighbors, it will become dead in the next round. Here, the either colored square will die after the round ends.</p>
+        </div>
+        
+      </div>
+
+      <div class="game-container">
+        
+        <div class="top-display">
+            <div>
+                <h1 id="info-display">How To Play!</h1>
+            </div>
+            
+            <div class="score-display">
+              <div class="value-display">
+                <h2>Red Squares</h2>
+                <h2 id="player-one-score"></h2>
+              </div>
+
+              <div class="value-display">
+                <h2>Turns</h2>
+                <h2 id="player-turns"></h2>
+              </div>
+
+              <div class="value-display">
+                <h2>Blue Squares</h2>
+                <h2 id="player-two-score"></h2>
+              </div>
+            </div>
+
+        </div>
+
+        <div class="board">
+          <div class="before-game">
+            <h1>The Beginning</h1>
+
+            <p>Before the game begins, each player will be able to make 6 turns each of either placing or destroying a square. The squares placed within these turns will be unaltered until the game begins. These squares act as the starting game board, so that the players will be able to grow the amount of squares they have!</p>
+
+            <h1>The Game</h1>
+
+            <p>After each player has placed their beginning squares, the game will start. During the game, each player will play a turn. After this, the rules of the board (Shown On The Sides) will be applied, resulting in the new board for the game. This will repeat until the max amount of turns have been reached.</p>
+
+            <h1>The End</h1>
+            <p>Once the max amount of turns has been reached, the game will end. Whoever has the most squares left on the board will win the game. If the amount of squares each player has is equal, the game will be a tie.</p>
+
+            <button onclick="beginGame()">Begin New Game</button>
+          </div>
+        </div>
+
+        <div class="bottom-display">
+          <h1 id="winner-display"></h1>
+          <h2 id="winner-square-display"></h2>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <h1>Game Board Rules</h1>
+        <div class="rule-display">
+          <img class="rule-image" src="assets/images/Growth.PNG" alt="">
+          <p>When a dead square has exactly 3 neighbors, it will become alive in the next round. Here, the grey square will become alive. It will become the color of the majority of its neighbors. For this grey square it will become a blue square.</p>
+        </div>
+        
+        <div class="rule-display">
+          <img class="rule-image" src="assets/images/Staying.PNG" alt="">
+          <p>When an alive square has 2 or 3 neighbors, it will stay alive with the same color in the next round. Here, the either colored square will become whatever color it was last.</p>
+        </div>
+        
+      </div>
+    </div>
+    <script src="js/main.js"></script>
+  </body>
+</html>
