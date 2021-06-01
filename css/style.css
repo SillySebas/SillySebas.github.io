@@ -101,6 +101,15 @@ body
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
+#heading_button_current
+{
+    background-color: #4e6e6a;
+}
+
+#heading_button_current:hover
+{
+    background-color: #d4eff0;
+}
 
 .heading_banner
 {
@@ -145,7 +154,7 @@ body
 
     margin: 0 2%;
     padding: 2% 2%;
-    min-height: min-content;
+    min-height: 80vh;
 
     align-items: center;
 }
@@ -199,6 +208,8 @@ body
     max-width: 25%;
     margin: 1% 1%;
 
+    border: solid black 1px;
+
 }
 
 .footing
@@ -238,6 +249,12 @@ body
     padding: 0;
 }
 
+.footing a
+{
+    color: inherit;
+    text-decoration: inherit;
+}
+
 .nav_display
 {
     display: flex;
@@ -260,4 +277,14 @@ body
 .nav_display h1:hover
 {
     color:#364949;
+}
+
+.game_container
+{
+    width: 100%;
+}
+
+.game_container img
+{
+    width: 80%;
 }
