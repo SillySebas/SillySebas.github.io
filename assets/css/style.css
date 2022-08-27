@@ -1,0 +1,171 @@
+/*Fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+
+@font-face
+{
+    font-family: oswald;
+    src: url(/assets/fonts/Oswald-ExtraLight.ttf);
+    font-weight: bold;
+}
+/*Object*/
+body{
+    margin: 0%;
+    font-family: oswald;
+    background-color: rgb(224, 238, 234);
+    background-image: url(/assets/images/beachside.png);
+    background-position: bottom;
+    background-size: cover;
+    background-attachment: fixed;
+}
+/*Structure*/
+.container
+{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-items: center;
+
+    margin: 0vh 10vw;
+    padding: 0vh 10vw;
+
+    border-left: 1px rgb(150, 150, 150) solid;
+    border-right: 1px rgb(150, 150, 150) solid;
+    background-color: rgba(255, 255, 255, 0.9);
+
+    min-height: 100vh;
+
+}
+.header
+{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-items: center;
+
+    width: 100%;
+
+    margin: 3vh 0vw 0vh 0vw;
+}
+.midder
+{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+}
+.footer
+{
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    align-items: center;
+    justify-content: flex-end;
+    margin: 16vh 0vw 2vh 0vw;
+
+    border-bottom: 1px black solid;
+}
+
+
+/*Global*/
+.column-div
+{
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+}
+.link
+{
+    margin: 1vh 2vw;
+
+    color: black;
+    text-decoration: none;
+}
+
+.link:hover
+{
+    text-decoration: underline;
+    font-weight: 800;
+}
+
+.current-page
+{
+    color: rgb(33, 33, 33);
+    text-decoration: underline;
+}
+
+/*Title and Navigation*/
+
+.title-div
+{
+    border-bottom: 1px rgb(0, 0, 0) solid;
+    width: 100%;
+    justify-content: left;
+}
+
+.title
+{
+    margin: 0px;
+    margin-left: 2vw;
+    font-size: 250%;
+}
+
+.navigation-div
+{
+    display: flex;
+
+    justify-content: left;
+
+    width: 100%;
+}
+
+
+/*Content*/
+
+.content-container
+{
+    width: 80%;
+    margin: 3vh 0vw;
+}
+
+.content-title-div
+{
+    border-bottom: 1px rgb(0, 0, 0) solid;
+    margin-bottom: 2vh;
+}
+
+.content-title
+{
+    font-size: 225%;
+    margin: 0px;
+}
+
+.content
+{
+    font-size: 120%;
+    font-family: 'Rubik', sans-serif;
+
+    display: flex;
+
+    flex-direction: row;
+    
+}
+
+.content img
+{
+    max-height: 45vh;
+    max-width: 30vw;
+}
+
+.content-description
+{
+    margin: 5vh 4vw;
+}

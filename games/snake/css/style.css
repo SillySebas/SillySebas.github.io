@@ -1,0 +1,54 @@
+
+
+body
+{
+    background-image: none;
+}
+
+.container
+{
+    min-width: min-content;
+}
+.snake-score
+{
+    margin: 0px;
+}
+.game-menu
+{
+    position: absolute;
+    height: 544px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    display: flex;
+}
+
+.game-menu button
+{
+    font-family: oswald;
+
+    color: white;
+    background-color: black;
+
+    font-size: larger;
+
+    border: none;
+}
+
+.game-menu button:hover
+{
+
+    color: white;
+    background-color: rgb(58, 58, 58);
+
+}
+
+.game-menu button:active
+{
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+}
