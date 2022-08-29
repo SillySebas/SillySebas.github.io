@@ -1,8 +1,11 @@
 //Grab document objects
 let graph = document.querySelector(".graph-canvas");
 let graphCanvas = graph.getContext("2d");
+let expressionInput = document.querySelector(".expression-input");
 
-graphCanvas.font = "15px Arial"
+//Set up
+graphCanvas.font = "15px Arial";
+expressionInput.value = "y = ";
 
 const XOFFSET = graph.width/2;
 const YOFFSET = graph.height/2;
@@ -35,6 +38,39 @@ document.onmousedown = onDragGraph;
 document.onmouseup = ()=>{isDragging = false; updateGraph();}
 document.onmousemove = dragGraph;
 document.onwheel = onZoom;
+
+
+document.addEventListener("keydown", (event)=>{
+    if (event.key == " ")
+    {
+        resetView();
+    }
+});
+
+
+function resetView(event)
+{
+    viewOriginX = 0;
+    viewOriginY = 0;
+
+    zoomRaw = 0;
+    zoomFactor = 1;
+
+    clarity = 5;
+
+    while((GRAPHMEASURES*clarity*zoomFactor > XLIMIT) || (GRAPHMEASURES*clarity*zoomFactor < XOFFSET))
+    {
+        if(GRAPHMEASURES*clarity*zoomFactor > XLIMIT)
+        {
+            clarity = clarity/2
+        }else if (GRAPHMEASURES*clarity*zoomFactor < XOFFSET)
+        {
+            clarity = clarity*2
+        }
+    }
+
+    updateGraph();
+}
 
 //Zoom graph when mouse wheel is scrolled
 function onZoom(event)
@@ -80,7 +116,6 @@ function dragGraph(event) {
         
         updateGraph();
     }
-    
 }
 
 //Draws graph axes
@@ -159,12 +194,6 @@ function drawFunction(f)
     let y = 0;
     let x = 0;
 
-    let precision = false;
-    if (clarity < 1)
-    {
-        precision = true;
-    }
-
     graphCanvas.beginPath();
     graphCanvas.strokeStyle = "red";
 
@@ -175,20 +204,20 @@ function drawFunction(f)
         x = (i-viewOriginX)/zoomFactor;
 
         //Calculate y using x and the given function
-        y= x*x*x
+        y=x*x
         
         //Draw the the new calculated point, and move the stroke to the same point to create a continous line
-        graphCanvas.lineTo(Math.floor(x*(zoomFactor)+XOFFSET+viewOriginX), Math.floor(-y*(zoomFactor)+YOFFSET+viewOriginY));
-        graphCanvas.moveTo(Math.floor(x*(zoomFactor)+XOFFSET+viewOriginX), Math.floor(-y*(zoomFactor)+YOFFSET+viewOriginY));
+        graphCanvas.lineTo((x*(zoomFactor)+XOFFSET+viewOriginX), (-y*(zoomFactor)+YOFFSET+viewOriginY));
+        graphCanvas.moveTo((x*(zoomFactor)+XOFFSET+viewOriginX), (-y*(zoomFactor)+YOFFSET+viewOriginY));
         if(isDragging && i == (mouseDrag.endX-XOFFSET)-graph.offsetLeft)
         {
             graphCanvas.fillStyle = "Green";
 
-            if (precision) {
-                graphCanvas.fillText("("+String(x)+", "+String(y)+")", Math.floor(x*(zoomFactor)+XOFFSET+viewOriginX), Math.floor(-y*(zoomFactor)+YOFFSET+viewOriginY)+graphCanvas.measureText("(").actualBoundingBoxAscent);
-}
+            if (clarity < 1) {
+                graphCanvas.fillText("("+String(x)+", "+String(y)+")", (x*(zoomFactor)+XOFFSET+viewOriginX), (-y*(zoomFactor)+YOFFSET+viewOriginY)+graphCanvas.measureText("(").actualBoundingBoxAscent);
+            }
             else {
-                graphCanvas.fillText("("+String(Math.round(x*100)/100)+", "+String(Math.round(y*100)/100)+")", Math.floor(x*(zoomFactor)+XOFFSET+viewOriginX), Math.floor(-y*(zoomFactor)+YOFFSET+viewOriginY)+graphCanvas.measureText("(").actualBoundingBoxAscent);
+                graphCanvas.fillText("("+String(Math.round(x*100)/100)+", "+String(Math.round(y*100)/100)+")", (x*(zoomFactor)+XOFFSET+viewOriginX), (-y*(zoomFactor)+YOFFSET+viewOriginY)+graphCanvas.measureText("(").actualBoundingBoxAscent);
             }
         }
     }
@@ -197,8 +226,22 @@ function drawFunction(f)
 
 function stringToExpression(f)
 {
-    mathFunctions = ["sin", "tan",]
-    mathExpressions = ["/","*","-","+"]
+    let operations = [];
+    let func = String(f)
+    
+    //Scrub string
+
+    func = func.toLowerCase();
+
+    //remove spaces
+    for (let i = 0; i < func.length; i++) {
+        func = func.replace(" ", "");
+    }
+
+
+    let mathFunctions = ["sin", "tan"];
+    let mathExpressions = ["/","*","-","+"];
+    let mathVariables = ["x"];
 }
 
 //Runs each function responsible for displaying the graph
@@ -206,10 +249,14 @@ function updateGraph()
 {
     //Clears graph
     graphCanvas.clearRect(0,0, XLIMIT, YLIMIT);
+
     drawGraphMeasures();
     drawGraphAxes();
     
     drawFunction("");
 }
 
+resetView();
 updateGraph();
+
+stringToExpression("Y= x  * 102");
