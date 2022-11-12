@@ -5,7 +5,7 @@ let expressionInput = document.querySelector(".expression-input");
 
 //Set up
 graphCanvas.font = "15px Arial";
-expressionInput.value = "y = ";
+expressionInput.value = "x";
 
 const XOFFSET = graph.width/2;
 const YOFFSET = graph.height/2;
@@ -22,6 +22,9 @@ let zoomFactor = 1;
 
 let clarity = 5;
 
+let y = 0;
+let x = 50;
+
 mouseDrag = {
     startX: 0,
     startY: 0,
@@ -32,7 +35,13 @@ mouseDrag = {
 }
 let isDragging = false;
 
-let func = "x"
+let func = "x";
+
+const expressionMap = 
+{
+    
+}
+
 //Set document event handlers to new functions
 document.onmousedown = onDragGraph;
 document.onmouseup = ()=>{isDragging = false; updateGraph();}
@@ -189,11 +198,8 @@ function drawGraphMeasures()
 }
 
 //Draws a given function on the graph
-function drawFunction(f)
+function drawFunction()
 {
-    let y = 0;
-    let x = 0;
-
     graphCanvas.beginPath();
     graphCanvas.strokeStyle = "red";
 
@@ -204,7 +210,8 @@ function drawFunction(f)
         x = (i-viewOriginX)/zoomFactor;
 
         //Calculate y using x and the given function
-        y=x*x
+        y = evaluateStringAsExpression()
+
         
         //Draw the the new calculated point, and move the stroke to the same point to create a continous line
         graphCanvas.lineTo((x*(zoomFactor)+XOFFSET+viewOriginX), (-y*(zoomFactor)+YOFFSET+viewOriginY));
@@ -224,26 +231,6 @@ function drawFunction(f)
     graphCanvas.stroke();
 }
 
-function stringToExpression(f)
-{
-    let operations = [];
-    let func = String(f)
-    
-    //Scrub string
-
-    func = func.toLowerCase();
-
-    //remove spaces
-    for (let i = 0; i < func.length; i++) {
-        func = func.replace(" ", "");
-    }
-
-
-    let mathFunctions = ["sin", "tan"];
-    let mathExpressions = ["/","*","-","+"];
-    let mathVariables = ["x"];
-}
-
 //Runs each function responsible for displaying the graph
 function updateGraph()
 {
@@ -253,10 +240,20 @@ function updateGraph()
     drawGraphMeasures();
     drawGraphAxes();
     
-    drawFunction("");
+    drawFunction();
+}
+
+//Takes in string and evaluates it as an mathematical expression
+let evaluateStringAsExpression = Function(`'use strict'; return (${expressionInput.value})`);
+
+
+function changeExpressionInternal()
+{
+    console.log("clcik", expressionInput.value)
+    evaluateStringAsExpression = Function(`'use strict'; return (${expressionInput.value})`);
+
+    updateGraph();
 }
 
 resetView();
 updateGraph();
-
-stringToExpression("Y= x  * 102");
