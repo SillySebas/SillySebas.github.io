@@ -7,3 +7,22 @@
 {
     display: flex;
 }
+
+.expression-h1
+{
+    margin: 0;
+    font-size: 24px;
+    padding-bottom: 0px;
+}
+
+.expression-input
+{
+    font-family: oswald;
+    font-size: 24px;
+}
+
+.expression-button
+{
+    font-family: oswald;
+    font-size: 24px;
+}
