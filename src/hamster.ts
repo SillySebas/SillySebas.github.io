@@ -312,7 +312,7 @@ class ImageManager
         });
     }
 
-    static drawArea()//fucked
+    static drawArea()
     {
         camera.areaIn.chunks.forEach((chunk : WorldChunk) =>
         {

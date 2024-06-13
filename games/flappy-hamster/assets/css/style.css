@@ -1,0 +1,26 @@
+html, body
+{
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.hamster-canvas
+{
+    box-sizing: border-box;
+    image-rendering: pixelated;
+    background-color: rgb(152, 207, 255);
+    background-image: url(../../../hamster/assets/images/clouds.png);
+
+    background-size: contain;
+    background-repeat: repeat-x;
+}
+
+.hidden-sprite
+{
+    position: absolute;
+    visibility: hidden;
+    left: 0pc;
+    top: 0px;
+    
+}
