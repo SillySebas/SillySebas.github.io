@@ -43,6 +43,8 @@ class Transform extends Component
     y: number = 0;
     width: number = 0;
     height: number = 0;
+    unscaledWidth: number = 0;
+    unscaledHeight: number = 0;
     scale: number = 0;
 
     constructor()
@@ -56,18 +58,19 @@ class Transform extends Component
 
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
+        
+        this.unscaledWidth = width;
+        this.unscaledHeight = height;
+
         this.scale = scale;
+        this.width = width*scale;
+        this.height = height*scale;
     }
 
-    getWidth() : number
+    applyScale(scale : number)
     {
-        return this.width*this.scale
-    }
-    getHeight() : number
-    {
-        return this.height*this.scale
+        this.width = this.unscaledWidth*scale;
+        this.height = this.unscaledHeight*scale;
     }
 }
 
@@ -90,6 +93,7 @@ class BoundingBox extends Component
         this.isInteractable = isInteractable;
         this.isCollidable = isCollidable;
     }
+
     isPointInBounds(x: number, y: number)
     {
         return (this.transform.x - (this.transform.width*0.5 )) <= x && 
@@ -97,6 +101,32 @@ class BoundingBox extends Component
                (this.transform.y - (this.transform.height*0.5)) <= y && 
                (this.transform.y + (this.transform.height*0.5)) >= y;
     }
+
+    isCollidingWith(object : GameObject)
+    {
+        //console.log(this.parent, object);
+        if(this.transform.x < object.transform.x && (this.transform.x + this.transform.width) > object.transform.x)
+        {
+            console.log("is colliding case 1");
+        }
+        if(this.transform.x < (object.transform.x + object.transform.width) && (this.transform.x + this.transform.width) > (object.transform.x + object.transform.width))
+        {
+            console.log("is colliding case 2");
+        }
+    }
+
+    isColliding()
+    {
+        this.parent?.areaIn.objects.forEach((object : GameObject) => {
+            this.isCollidingWith(object);
+        })
+    }
+
+    update()
+    {
+        this.isColliding();
+    }
+
 }
 
 class Sprite extends Component
@@ -144,6 +174,11 @@ class GameObject
         this.transform.x += (vector.x * this.horizontalMovementSpeed) * Game.FIXED_UPDATE;
         this.transform.y += (vector.y * this.verticalMovementSpeed) * Game.FIXED_UPDATE;
         console.log(this.transform.x, this.transform.y)
+    }
+
+    update()
+    {
+        this.boundingBox.update();
     }
 
 }
@@ -312,11 +347,11 @@ class ImageManager
         });
     }
 
-    static drawArea()//fucked
+    static drawArea()
     {
         camera.areaIn.chunks.forEach((chunk : WorldChunk) =>
         {
-            console.log(chunk)
+            //console.log(chunk)
             for (let x = 0; x < chunk.height; x++) {
                 for (let y = 0; y < chunk.width; y++) {
                     worldCanvasContext.drawImage(chunk.tiles[(x+(y*(chunk.width)))],
@@ -367,10 +402,10 @@ class ImageManager
         {
             camera.areaIn.objects.forEach((object) => {
                 worldCanvasContext.drawImage(object.sprite.image,
-                    this.offsetX+((((object.transform.x)-camera.transform.x)-(object.transform.getWidth() /2))*this.METERS_TO_PIXELS*camera.transform.scale),
-                    this.offsetY+((((-object.transform.y)+camera.transform.y)-(object.transform.getHeight()/2))*this.METERS_TO_PIXELS*camera.transform.scale),
-                    (object.transform.getWidth()*this.METERS_TO_PIXELS*camera.transform.scale),
-                    (object.transform.getHeight()*this.METERS_TO_PIXELS*camera.transform.scale)
+                    this.offsetX+((((object.transform.x)-camera.transform.x)-(object.transform.width /2))*this.METERS_TO_PIXELS*camera.transform.scale),
+                    this.offsetY+((((-object.transform.y)+camera.transform.y)-(object.transform.height /2))*this.METERS_TO_PIXELS*camera.transform.scale),
+                    (object.transform.width*this.METERS_TO_PIXELS*camera.transform.scale),
+                    (object.transform.height*this.METERS_TO_PIXELS*camera.transform.scale)
                     )
             });
         }
@@ -382,6 +417,13 @@ class ImageManager
         worldCanvasContext.fillStyle = "#FF0000";
         worldCanvasContext?.fillRect(0, worldCanvas.height/2-1, worldCanvas.width, 2);
         worldCanvasContext?.fillRect(worldCanvas.width/2-1, 0, 2, worldCanvas.height);
+
+        camera.areaIn.objects.forEach((object : GameObject) => {
+            worldCanvasContext.strokeRect(this.offsetX+((((object.transform.x)-camera.transform.x)-(object.transform.width /2))*this.METERS_TO_PIXELS*camera.transform.scale),
+                                                        this.offsetY+((((-object.transform.y)+camera.transform.y)-(object.transform.height /2))*this.METERS_TO_PIXELS*camera.transform.scale),
+                                                        (object.transform.width*this.METERS_TO_PIXELS*camera.transform.scale),
+                                                        (object.transform.height*this.METERS_TO_PIXELS*camera.transform.scale))
+        })
     }
 
     static draw()
@@ -391,7 +433,7 @@ class ImageManager
 
         this.drawArea();
         this.drawGameObjects();
-        //this.drawDebug();
+        this.drawDebug();
     }
 
     static windowUpdate()
@@ -407,6 +449,11 @@ class ImageManager
     
 }
 
+class Entity extends GameObject
+{
+    
+}
+
 class Hamster extends GameObject
 {
     horizontalWalkingSpeed: number;
@@ -415,8 +462,6 @@ class Hamster extends GameObject
     movementCooldown: number = 0;
     
     isHeld: boolean = false;
-
-    
     
     constructor(area : Area, location : Coordinate)
     {
@@ -440,9 +485,21 @@ class Hamster extends GameObject
 
     update()
     {
+        super.update();
         this.checkMovement();
     }
 
+}
+
+class Fountain extends GameObject
+{
+    constructor(area : Area, location : Coordinate)
+    {
+        super(area);
+        this.transform.init(this, 10, 10, 4, 4, 1);
+        this.boundingBox.init(this, this.transform, true, true);
+        this.sprite.init(this, ImageManager.images["fountain"]);
+    }
 }
 
 class Game
@@ -463,11 +520,19 @@ class Game
         
     }
 
+    static updateGameObjects()
+    {
+        camera.areaIn.objects.forEach((object : GameObject) => {
+            object.update();
+        });
+    }
+
     static update()
     {
         GameController.update();
+        Game.updateGameObjects();
         ImageManager.draw();
-        camera.update();
+
     }
 }
 
@@ -584,7 +649,7 @@ class GameController
         this.mouseLocation.x = ((event.clientX-ImageManager.offsetX)/ImageManager.METERS_TO_PIXELS/camera.transform.scale)+camera.transform.x;
         this.mouseLocation.y = -((event.clientY-ImageManager.offsetY)/ImageManager.METERS_TO_PIXELS/camera.transform.scale)+camera.transform.y;
 
-        console.log(this.mouseLocation)
+        //console.log(this.mouseLocation)
 
         if(this.holding)
         {
@@ -615,6 +680,9 @@ ImageManager.init();
 const camera = new Camera(new Area("NO WHERE"));
 const world = new GameWorld();
 const hamster = new Hamster(world.areas["field"], {x: 0, y: 0});
+const hamster2 = new Hamster(world.areas["field"], {x: 0, y: 0});
+
+const fountain = new Fountain(world.areas["field"], {x: 0, y: 0});
 
 Game.init();
 GameController.init();
