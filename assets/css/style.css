@@ -11,7 +11,7 @@
 body{
     margin: 0%;
     font-family: oswald;
-    background-color: rgb(224, 238, 234);
+    background-color: rgb(255, 255, 255);
     background-image: url(/assets/images/beachside.png);
     background-position: bottom;
     background-size: cover;
@@ -34,7 +34,6 @@ body{
     background-color: rgba(255, 255, 255, 0.9);
 
     min-height: 100vh;
-
 }
 .header
 {

@@ -25,8 +25,9 @@ class Transform extends Component {
         this.unscaledWidth = width;
         this.unscaledHeight = height;
         this.scale = scale;
-        this.width = width * scale;
-        this.height = height * scale;
+        this.width = width;
+        this.height = height;
+        this.applyScale(this.scale);
     }
     applyScale(scale) {
         this.width = this.unscaledWidth * scale;
@@ -39,32 +40,74 @@ class BoundingBox extends Component {
         this.transform = new Transform();
         this.isInteractable = false;
         this.isCollidable = false;
+        this.isPushable = false;
     }
-    init(parent, transform, isInteractable, isCollidable) {
+    init(parent, transform, isInteractable, isCollidable, isPushable) {
         super.setParent(parent);
         this.transform = transform;
         this.isInteractable = isInteractable;
         this.isCollidable = isCollidable;
+        this.isPushable = isPushable;
     }
     isPointInBounds(x, y) {
-        return (this.transform.x - (this.transform.width * 0.5)) <= x &&
-            (this.transform.x + (this.transform.width * 0.5)) >= x &&
-            (this.transform.y - (this.transform.height * 0.5)) <= y &&
-            (this.transform.y + (this.transform.height * 0.5)) >= y;
+        return (this.transform.x - (this.transform.width)) <= x &&
+            (this.transform.x + (this.transform.width)) >= x &&
+            (this.transform.y - (this.transform.height)) <= y &&
+            (this.transform.y + (this.transform.height)) >= y;
     }
     isCollidingWith(object) {
+        /*
+            ((Ax1 < Bx1 && Ax2 > Bx1) ||
+            (Ax1 < Bx2 && Ax2 > Bx2)) && ((this.transform.y < object.transform.y && (this.transform.y + this.transform.height) > object.transform.y) ||
+            (this.transform.y < (object.transform.y + object.transform.height) && (this.transform.y + this.transform.height) > (object.transform.y + object.transform.height)))
+         */
         //console.log(this.parent, object);
-        if (this.transform.x < object.transform.x && (this.transform.x + this.transform.width) > object.transform.x) {
-            console.log("is colliding case 1");
+        if (((this.transform.x < object.transform.x && (this.transform.x + this.transform.width) > object.transform.x) || (this.transform.x < (object.transform.x + object.transform.width) && (this.transform.x + this.transform.width) > (object.transform.x + object.transform.width))) && ((this.transform.y < object.transform.y && (this.transform.y + this.transform.height) > object.transform.y) || (this.transform.y < (object.transform.y + object.transform.height) && (this.transform.y + this.transform.height) > (object.transform.y + object.transform.height)))) {
+            console.log("COLLISON");
+            let overlapX1 = (object.transform.x + object.transform.width) - this.transform.x;
+            let overlapX2 = object.transform.x - (this.transform.x + this.transform.width);
+            let finalX = overlapX2;
+            if (Math.abs(overlapX1) < Math.abs(overlapX2)) {
+                finalX = overlapX1;
+            }
+            let overlapY1 = (object.transform.y + object.transform.height) - this.transform.y;
+            let overlapY2 = object.transform.y - (this.transform.y + this.transform.height);
+            let finalY = overlapY2;
+            if (Math.abs(overlapY1) < Math.abs(overlapY2)) {
+                finalY = overlapY1;
+            }
+            if (Math.abs(finalX) < Math.abs(finalY)) {
+                if (this.isPushable)
+                    this.transform.x += finalX / 2;
+                if (object.boundingBox.isPushable)
+                    object.transform.x -= finalX / 2;
+            }
+            else {
+                if (this.isPushable)
+                    this.transform.y += finalY / 2;
+                if (object.boundingBox.isPushable)
+                    object.transform.y -= finalY / 2;
+            }
         }
-        if (this.transform.x < (object.transform.x + object.transform.width) && (this.transform.x + this.transform.width) > (object.transform.x + object.transform.width)) {
-            console.log("is colliding case 2");
+        /*if(this.transform.x <= (object.transform.x + object.transform.width) && (this.transform.x + this.transform.width) >= (object.transform.x + object.transform.width))
+        {
+            console.log(this.parent, "is colliding case 2");
         }
+        if(this.transform.y <= object.transform.y && (this.transform.y + this.transform.height) >= object.transform.y)
+            {
+                console.log(this.parent, "is colliding", object);
+            }
+        if(this.transform.y <= (object.transform.y + object.transform.height) && (this.transform.y + this.transform.height) >= (object.transform.y + object.transform.height))
+        {
+            console.log(this.parent, "is colliding case 2");
+        }*/
     }
     isColliding() {
         var _a;
         (_a = this.parent) === null || _a === void 0 ? void 0 : _a.areaIn.objects.forEach((object) => {
-            this.isCollidingWith(object);
+            if (this.parent != object) {
+                this.isCollidingWith(object);
+            }
         });
     }
     update() {
@@ -85,20 +128,22 @@ class GameObject {
     constructor(area) {
         this.horizontalMovementSpeed = 0;
         this.verticalMovementSpeed = 0;
+        this.movementVector = { x: 0, y: 0 };
         this.areaIn = area;
         this.areaIn.objects.push(this);
         this.transform = new Transform();
         this.sprite = new Sprite();
         this.boundingBox = new BoundingBox();
     }
-    move(vector) {
+    move() {
         //console.log(vector.x * this.horizontalMovementSpeed, vector.y * this.verticalMovementSpeed)
-        this.transform.x += (vector.x * this.horizontalMovementSpeed) * Game.FIXED_UPDATE;
-        this.transform.y += (vector.y * this.verticalMovementSpeed) * Game.FIXED_UPDATE;
-        console.log(this.transform.x, this.transform.y);
+        this.transform.x += (this.movementVector.x * this.horizontalMovementSpeed) * Game.FIXED_UPDATE;
+        this.transform.y += (this.movementVector.y * this.verticalMovementSpeed) * Game.FIXED_UPDATE;
+        //console.log(this.transform.x, this.transform.y)
     }
     update() {
         this.boundingBox.update();
+        this.move();
     }
 }
 class Camera extends GameObject {
@@ -114,7 +159,7 @@ class Camera extends GameObject {
     scale(amount) {
         this.absoluteScale += amount / 100;
         this.transform.scale = Camera.GZC_A * Math.exp(-Math.pow(this.absoluteScale - Camera.GZC_B, 2) / (2 * Math.pow(Camera.GZC_C, 2)));
-        console.log(this.absoluteScale, this.transform.scale);
+        //console.log(this.absoluteScale, this.transform.scale);
         if (this.absoluteScale > Camera.GZC_B) {
             this.clampScale = true;
         }
@@ -249,7 +294,7 @@ class ImageManager {
     static drawGameObjects() {
         if (camera.areaIn) {
             camera.areaIn.objects.forEach((object) => {
-                worldCanvasContext.drawImage(object.sprite.image, this.offsetX + ((((object.transform.x) - camera.transform.x) - (object.transform.width / 2)) * this.METERS_TO_PIXELS * camera.transform.scale), this.offsetY + ((((-object.transform.y) + camera.transform.y) - (object.transform.height / 2)) * this.METERS_TO_PIXELS * camera.transform.scale), (object.transform.width * this.METERS_TO_PIXELS * camera.transform.scale), (object.transform.height * this.METERS_TO_PIXELS * camera.transform.scale));
+                worldCanvasContext.drawImage(object.sprite.image, this.offsetX + ((((object.transform.x) - camera.transform.x)) * this.METERS_TO_PIXELS * camera.transform.scale), this.offsetY + ((((-object.transform.y - object.transform.width) + camera.transform.y)) * this.METERS_TO_PIXELS * camera.transform.scale), (object.transform.width * this.METERS_TO_PIXELS * camera.transform.scale), (object.transform.height * this.METERS_TO_PIXELS * camera.transform.scale));
             });
         }
     }
@@ -258,7 +303,7 @@ class ImageManager {
         worldCanvasContext === null || worldCanvasContext === void 0 ? void 0 : worldCanvasContext.fillRect(0, worldCanvas.height / 2 - 1, worldCanvas.width, 2);
         worldCanvasContext === null || worldCanvasContext === void 0 ? void 0 : worldCanvasContext.fillRect(worldCanvas.width / 2 - 1, 0, 2, worldCanvas.height);
         camera.areaIn.objects.forEach((object) => {
-            worldCanvasContext.strokeRect(this.offsetX + ((((object.transform.x) - camera.transform.x) - (object.transform.width / 2)) * this.METERS_TO_PIXELS * camera.transform.scale), this.offsetY + ((((-object.transform.y) + camera.transform.y) - (object.transform.height / 2)) * this.METERS_TO_PIXELS * camera.transform.scale), (object.transform.width * this.METERS_TO_PIXELS * camera.transform.scale), (object.transform.height * this.METERS_TO_PIXELS * camera.transform.scale));
+            worldCanvasContext.strokeRect(this.offsetX + ((((object.transform.x) - camera.transform.x)) * this.METERS_TO_PIXELS * camera.transform.scale), this.offsetY + ((((-object.transform.y) + camera.transform.y) - (object.transform.height)) * this.METERS_TO_PIXELS * camera.transform.scale), (object.transform.width * this.METERS_TO_PIXELS * camera.transform.scale), (object.transform.height * this.METERS_TO_PIXELS * camera.transform.scale));
         });
     }
     static draw() {
@@ -280,33 +325,32 @@ ImageManager.METERS_TO_PIXELS = 16; // This many pixels = 1 meter, used to conve
 ImageManager.images = {};
 ImageManager.offsetX = 0; // This is the offset, in pixels, that objects need to be shifted over in order for them to be display in the middle.
 ImageManager.offsetY = 0; // ^
-class Hamster extends GameObject {
-    constructor(area, location) {
+class Entity extends GameObject {
+    constructor(area, location, dimension, scale, sprite) {
         super(area);
-        this.movementCooldown = 0;
-        this.isHeld = false;
-        this.transform.init(this, 0, 0, 1, 1, 1);
-        this.boundingBox.init(this, this.transform, true, true);
-        this.sprite.init(this, ImageManager.images["happyFacingLeft"]);
-        //Hamster properties
-        this.horizontalWalkingSpeed = 1;
-        this.verticalWalkingSpeed = 1;
-    }
-    checkMovement() {
-        if (this.movementCooldown == 0 && !this.isHeld) {
-        }
-    }
-    update() {
-        super.update();
-        this.checkMovement();
+        this.transform.init(this, location.x, location.y, dimension.x, dimension.y, scale);
+        this.boundingBox.init(this, this.transform, true, true, true);
+        this.sprite.init(this, sprite);
     }
 }
-class Fountain extends GameObject {
-    constructor(area, location) {
+class Structure extends GameObject {
+    constructor(area, location, dimension, scale, sprite) {
         super(area);
-        this.transform.init(this, 10, 10, 4, 4, 1);
-        this.boundingBox.init(this, this.transform, true, true);
-        this.sprite.init(this, ImageManager.images["fountain"]);
+        this.transform.init(this, location.x, location.y, dimension.x, dimension.y, scale);
+        this.boundingBox.init(this, this.transform, false, true, false);
+        this.sprite.init(this, sprite);
+    }
+}
+class Hamster extends Entity {
+    constructor(area, location) {
+        super(area, location, { x: 1, y: 1 }, 1, ImageManager.images["happyFacingLeft"]);
+        this.movementCooldown = 0;
+        this.isHeld = false;
+    }
+}
+class Fountain extends Structure {
+    constructor(area, location) {
+        super(area, location, { x: 4, y: 4 }, 1, ImageManager.images["fountain"]);
     }
 }
 class Game {
@@ -368,6 +412,25 @@ class GameController {
             this.keyboardDirectionVector.x *= this.diagonalSpeedAdjustment;
             this.keyboardDirectionVector.y *= this.diagonalSpeedAdjustment;
         }
+        this.focus.movementVector.y = 0;
+        this.focus.movementVector.x = 0;
+        if (this.keysPressed.has("w")) {
+            this.focus.movementVector.y += 1;
+        }
+        if (this.keysPressed.has("s")) {
+            this.focus.movementVector.y += -1;
+        }
+        if (this.keysPressed.has("a")) {
+            this.focus.movementVector.x += -1;
+        }
+        if (this.keysPressed.has("d")) {
+            this.focus.movementVector.x += 1;
+        }
+        if (this.focus.movementVector.x !== 0 && this.focus.movementVector.y !== 0) {
+            this.focus.movementVector.x *= this.diagonalSpeedAdjustment;
+            this.focus.movementVector.y *= this.diagonalSpeedAdjustment;
+        }
+        //console.log(this.focus);
     }
     static handleMouseWheel(event) {
         camera.scale(event.deltaY);
@@ -391,10 +454,10 @@ class GameController {
     static handleMouseMove(event) {
         this.mouseLocation.x = ((event.clientX - ImageManager.offsetX) / ImageManager.METERS_TO_PIXELS / camera.transform.scale) + camera.transform.x;
         this.mouseLocation.y = -((event.clientY - ImageManager.offsetY) / ImageManager.METERS_TO_PIXELS / camera.transform.scale) + camera.transform.y;
-        //console.log(this.mouseLocation)
+        console.log(this.mouseLocation);
         if (this.holding) {
-            this.holding.transform.x = this.mouseLocation.x;
-            this.holding.transform.y = this.mouseLocation.y;
+            this.holding.transform.x = this.mouseLocation.x - this.holding.transform.width / 2;
+            this.holding.transform.y = this.mouseLocation.y - this.holding.transform.height / 2;
         }
         else if (this.isDragging) {
             camera.transform.x += (this.dragStart.x - this.mouseLocation.x);
@@ -403,7 +466,7 @@ class GameController {
     }
     static update() {
         if (this.keyboardDirectionVector.x || this.keyboardDirectionVector.y)
-            camera.move(this.keyboardDirectionVector);
+            camera.move();
     }
 }
 GameController.keysPressed = new Set();
@@ -432,11 +495,13 @@ worldCanvas.height = window.innerHeight;
 ImageManager.init();
 const camera = new Camera(new Area("NO WHERE"));
 const world = new GameWorld();
-const hamster = new Hamster(world.areas["field"], { x: 0, y: 0 });
+const hamster = new Hamster(world.areas["field"], { x: 0, y: 3 });
 const hamster2 = new Hamster(world.areas["field"], { x: 0, y: 0 });
+hamster2.transform.applyScale(1);
 const fountain = new Fountain(world.areas["field"], { x: 0, y: 0 });
 Game.init();
 GameController.init();
+GameController.focus = hamster2;
 function onWindowResize() {
     ImageManager.windowUpdate();
 }
